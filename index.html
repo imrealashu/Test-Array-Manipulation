@@ -1,0 +1,112 @@
+<html>
+<head>
+	<title>Something</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="animate.css">
+	<style type="text/css">
+	body *{
+		border-radius: 0px !important;
+	}
+	</style>
+	<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+	<div class="jumbotron">
+		<h1 class="animated fadeInUp">Array Game!!</h1>
+		<p class=" animated fadeInLeft">There's Predefined Array of Numbers Say 
+			<p class="label label-danger animated fadeInRightBig">[7001,7002,7003, 7004, 7005]</p>
+		</p>
+		<form class="form-inline" role="form">
+			<div class="form-group">
+				<div class="input-group">
+					<label class="sr-only" for="exampleInputEmail2">Email address</label>
+					<div class="input-group-addon">[ ]</div>
+					<input type="text" class="form-control" id="number" placeholder="Enter Numbers" autofocus/>
+				</div>
+			</div>
+			<button type="button" id="btn" class="btn btn-success">Process</button> <br /><br />
+			<div id="target">
+				<label class="label label-primary">For Multiple Numbers Seperate With Commas, For Number Range Separate two numbers with dash</label><br/> <br/>
+				<label class="label label-primary">Example: 5508, 7698, 6998-7003 </label>
+			</div>
+		</form>
+
+	</body>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		var predefined = [7000,7001,7002,7003,7004,7005];
+	//Storing the predefined number
+	console.log("Predefined: "+predefined);
+	$('#btn').click(function(){ 
+		var value = $('#number').val();
+		var res = value.split(",");
+		var data = [];
+		var result = [];
+		
+
+		for(var i=0; i<res.length; i++){
+			if(res[i].indexOf("-") >=0 ){
+				var newres = res[i].split("-");
+				if(parseInt(newres[0]) > parseInt(newres[1])){
+					$('#target').html("<label class='label label-danger'>Invalid Range!!, Please Enter Valid Number Range</label>").addClass('animated pulse');	
+					return;
+				}
+				for(var k = newres[0]; k<=newres[1]; k++){
+						//console.log(k);
+						data.push(parseInt(k));
+					}
+				}else{
+					data.push(parseInt(res[i]));
+				}
+			}
+
+			console.log("Input Data: "+data);
+			Array.prototype.unique = function() {
+				var a = this.concat();
+				for(var i=0; i<a.length; ++i) {
+					for(var j=i+1; j<a.length; ++j) {
+						if(a[i] === a[j])
+							a.splice(j--, 1);
+					}
+				}
+
+				return a;
+			};
+			var result = predefined.concat(data).unique();
+			$('#target').html("<b>New Set of Elements is: "+String(result)+"</b>").addClass('animated fadeInUp');
+
+			var skipped = skipDuplicate(data, predefined);
+			$('#target').append("<br/><i>Skipped Numbers are: "+String(skipped)+"</i>").addClass('animated fadeInUp');			
+			console.log("skipped: "+skipped);
+			// console.log(data);
+
+			Array.prototype.remove = function(elem) {
+				var match = -1;
+
+				while( (match = this.indexOf(elem)) > -1 ) {
+					this.splice(match, 1);
+				}
+			};
+
+
+			for(x=0; x<skipped.length; x++){
+				data.remove(skipped[x]);
+			}
+			console.log("Final: "+data);
+		});
+});
+	//function that takes two input array and returns the duplicate values
+	function skipDuplicate(data1, data2){
+		var skipped = [];
+		for(x=0; x<data1.length; x++){
+			for(y=0; y<data2.length; y++){
+				if(data1[x]==data2[y]){
+					skipped.push(data1[x]);
+				}
+			}
+		}
+		return skipped;
+	}
+	</script>
+	</html>
