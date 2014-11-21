@@ -9,6 +9,7 @@
 	}
 	</style>
 	<script type="text/javascript" src="jquery.js"></script>
+
 </head>
 <body>
 	<div class="jumbotron">
@@ -20,11 +21,12 @@
 			<div class="form-group">
 				<div class="input-group">
 					<label class="sr-only" for="exampleInputEmail2">Email address</label>
-					<div class="input-group-addon">[ ]</div>
+					<div class="input-group-addon">[ Insesrt Elements ]</div>
 					<input type="text" class="form-control" id="number" placeholder="Enter Numbers" autofocus/>
 				</div>
 			</div>
-			<button type="button" id="btn" class="btn btn-success">Process</button> <br /><br />
+			<!-- <button type="button" id="btn" class="btn btn-success">Process</button> <br /><br /> -->
+			<br /> <br />
 			<div id="target">
 				<label class="label label-primary">For Multiple Numbers Seperate With Commas, For Number Range Separate two numbers with dash</label><br/> <br/>
 				<label class="label label-primary">Example: 5508, 7698, 6998-7003 </label>
@@ -38,7 +40,7 @@
 		var predefined = [7000,7001,7002,7003,7004,7005];
 	//Storing the predefined number
 	console.log("Predefined: "+predefined);
-	$('#btn').click(function(){ 
+	$('#number').keyup(function(){ 
 		var value = $('#number').val();
 		var res = value.split(",");
 		var data = [];
@@ -70,9 +72,9 @@
 							a.splice(j--, 1);
 					}
 				}
-
 				return a;
 			};
+
 			var result = predefined.concat(data).unique();
 			$('#target').html("<b>New Set of Elements is: "+String(result)+"</b>").addClass('animated fadeInUp');
 
@@ -83,7 +85,6 @@
 
 			Array.prototype.remove = function(elem) {
 				var match = -1;
-
 				while( (match = this.indexOf(elem)) > -1 ) {
 					this.splice(match, 1);
 				}
